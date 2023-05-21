@@ -1,0 +1,3 @@
+
+make debug && gdb ./test
+
