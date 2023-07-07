@@ -130,22 +130,22 @@ void l_rbt_insert(struct LRBTNode **tree, void *value, size_t value_size, int(*c
                 if (node_parent_relationship > 0) {
                     // grandparent -left> parent -right> node
 
-                    struct LRBTNode *node_left_temp = node->left;
+                    struct LRBTNode *node_left_temp = new_node->left;
                     struct LRBTNode *temp = NULL;
 
                     // rotate node counterclockwise compared to parent
-                    node->left = parent;
+                    new_node->left = parent;
                     parent->right = node_left_temp;
-                    grandparent->left = node;
+                    grandparent->left = new_node;
 
                     // swap the nodes on the stack so we dont get confused
                     temp = parent;
-                    parent = node;
-                    node = temp;
+                    parent = new_node;
+                    new_node = temp;
 
                     // update the parent pointers
-                    node_left_temp->parent = node;
-                    node->parent = parent;
+                    node_left_temp->parent = new_node;
+                    new_node->parent = parent;
                     parent->parent = grandparent;
 
                     // node is now left child of parent
@@ -187,22 +187,22 @@ void l_rbt_insert(struct LRBTNode **tree, void *value, size_t value_size, int(*c
                 if (node_parent_relationship < 0) {
                     // grandparent -right> parent -left> node
 
-                    struct LRBTNode *node_right_temp = node->right;
+                    struct LRBTNode *node_right_temp = new_node->right;
                     struct LRBTNode *temp = NULL;
 
                     // rotate node clockwise compared to parent
-                    node->right = parent;
+                    new_node->right = parent;
                     parent->left = node_right_temp;
-                    grandparent->right = node;
+                    grandparent->right = new_node;
 
                     // swap the nodes on the stack so we dont get confused in the next step
                     temp = parent;
-                    parent = node;
-                    node = temp;
+                    parent = new_node;
+                    new_node = temp;
 
                     // update the parent pointers
-                    node_right_temp->parent = node;
-                    node->parent = parent;
+                    node_right_temp->parent = new_node;
+                    new_node->parent = parent;
                     parent->parent = grandparent;
 
                     // node is now right child of parent
@@ -217,7 +217,7 @@ void l_rbt_insert(struct LRBTNode **tree, void *value, size_t value_size, int(*c
                     parent->left = grandparent;
                     grandparent->right = parent_left_temp;
                     if (grandgrandparent != NULL) {
-                        struct grandgrandparent_grandparent_relationship = compare(
+                        int grandgrandparent_grandparent_relationship = compare(
                             grandgrandparent->data,
                             grandparent->data
                         );
