@@ -5,6 +5,7 @@ TEST_NAME = test
 SRC_DIR = src
 SRC_FILES = \
 	binary_search_tree.c \
+	red_black_tree.c \
 	stack.c
 FULL_SRC_FILES = $(patsubst %.c,$(SRC_DIR)/%.c, $(SRC_FILES))
 
@@ -15,6 +16,7 @@ TEST_FILES = \
 	$(TEST_DIR)/main.c \
 	$(TEST_DIR)/spec_stack.c \
 	$(TEST_DIR)/spec_binary_search_tree.c \
+	$(TEST_DIR)/spec_red_black_tree.c \
 	$(TEST_DIR)/spec_common.c
 TEST_SEED = $(shell date +"%s")
 TEST_SEED_MACRO_NAME = TEST_SEED

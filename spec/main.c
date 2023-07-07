@@ -57,6 +57,11 @@ i32 main() {
         current_test = tests[i];
     }
 
+    // char *thing = malloc(sizeof(char) * 20);
+    // size_t size = malloc_usable_size(thing);
+    // printf("size of unsigned ints: %zu\n", sizeof(unsigned int));
+    // printf("malloc usable size: %zu\n", size);
+
     // f_debug_mem_print(0);
 
     return 0;
