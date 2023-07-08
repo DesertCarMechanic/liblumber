@@ -1,3 +1,3 @@
 
-make debug && gdb ./test
+make debug && gdb ./compiled_test_suite
 

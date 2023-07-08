@@ -8,9 +8,9 @@
 // #include <forge.h> // for mem debugging
 #include <sane.h>
 
-#include "spec_common.h"
-#include "spec_binary_search_tree.h"
-#include "spec_stack.h"
+#include "test_common.h"
+#include "test_binary_search_tree.h"
+#include "test_stack.h"
 
 void run_test(struct TestUnit *t)
 {

@@ -1,6 +1,5 @@
 
 LIB_NAME = lumber
-TEST_NAME = test
 
 SRC_DIR = src
 SRC_FILES = \
@@ -11,13 +10,15 @@ FULL_SRC_FILES = $(patsubst %.c,$(SRC_DIR)/%.c, $(SRC_FILES))
 
 OBJECT_FILES = $(patsubst %.c, %.o, $(SRC_FILES))
 
-TEST_DIR = spec
+TEST_NAME = compiled_test_suite
+TEST_DIR = tests
+TEST_FILE_PREFIX = test
 TEST_FILES = \
 	$(TEST_DIR)/main.c \
-	$(TEST_DIR)/spec_stack.c \
-	$(TEST_DIR)/spec_binary_search_tree.c \
-	$(TEST_DIR)/spec_red_black_tree.c \
-	$(TEST_DIR)/spec_common.c
+	$(TEST_DIR)/$(TEST_FILE_PREFIX)_stack.c \
+	$(TEST_DIR)/$(TEST_FILE_PREFIX)_binary_search_tree.c \
+	$(TEST_DIR)/$(TEST_FILE_PREFIX)_red_black_tree.c \
+	$(TEST_DIR)/$(TEST_FILE_PREFIX)_common.c
 TEST_SEED = $(shell date +"%s")
 TEST_SEED_MACRO_NAME = TEST_SEED
 
@@ -69,6 +70,6 @@ debug: $(FULL_SRC_FILES) $(TEST_FILES)
 		-o $(TEST_NAME)
 
 clean:
-	$(RM) *.o *.so $(TEST_NAME) core*
+	$(RM) *.o *.so $(TEST_NAME) core* valgrind_report
 
 .PHONY: all release test debug clean 

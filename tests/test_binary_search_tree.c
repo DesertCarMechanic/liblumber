@@ -5,9 +5,9 @@
 
 #include <sane.h>
 
-#include "spec_common.h"
+#include "test_common.h"
 #include "../src/binary_search_tree.h"
-#include "spec_binary_search_tree.h"
+#include "test_binary_search_tree.h"
 
 i32 compare_int(void *a, void *b)
 {

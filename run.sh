@@ -1,2 +1,2 @@
 #/usr/bin/env bash
-make test && ./test
+make test && ./compiled_test_suite

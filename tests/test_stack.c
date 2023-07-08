@@ -4,7 +4,7 @@
 
 #include <sane.h>
 
-#include "spec_common.h"
+#include "test_common.h"
 #include "../src/stack.h"
 
 

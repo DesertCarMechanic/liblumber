@@ -1,6 +1,4 @@
 
-#include <sane.h>
-
 enum RESULT {
     RESULT_SUCCESS,
     RESULT_FAILURE
