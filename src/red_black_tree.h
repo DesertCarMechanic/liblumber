@@ -12,3 +12,5 @@ struct LRBTNode {
     enum RBT_COLOR color;
 };
 
+void l_rbt_insert(struct LRBTNode **tree, void *value, size_t value_size, int(*compare)(void *, void *));
+void l_rbt_delete(struct LRBTNode **tree, void *value, int(*compare)(void *, void *));

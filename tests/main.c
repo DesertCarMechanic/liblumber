@@ -1,7 +1,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 // #include <pthread.h>
 
 // #define F_MEMORY_DEBUG // must be defined before including <forge.h>
@@ -9,8 +8,10 @@
 #include <sane.h>
 
 #include "test_common.h"
-#include "test_binary_search_tree.h"
+#include "test_memtools.h"
+#include "test_array.h"
 #include "test_stack.h"
+#include "test_binary_search_tree.h"
 
 void run_test(struct TestUnit *t)
 {
@@ -44,9 +45,12 @@ i32 main() {
     srand(TEST_SEED); // TEST_SEED defined in Makefile
 
     struct TestUnit *tests[] = {
-        &bst_test_insert_remove,
+        &memtools_test_copy_blind,
+        &array_test_append,
+        &array_test_misaligned_struct,
         &stack_test_push_pop_start,
         &stack_test_push_pop_end,
+        &bst_test_insert_remove,
         NULL,
     };
 

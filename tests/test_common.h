@@ -10,6 +10,8 @@ struct TestUnit {
     enum RESULT (*test)(void);
 };
 
+#define assert(expr) if ((expr) == 0) return RESULT_FAILURE;
+
 // #define CURRENT_TIME time(NULL)
 // #define RAND_N 32
 

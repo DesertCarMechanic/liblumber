@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <sane.h>
 #include <string.h> // for memcpy
 
 #include "stack.h"
@@ -13,7 +13,7 @@ struct LBSTIterator *l_bst_iterator_create(struct LBSTNode *bst_root)
     struct LBSTIterator *p_iter = malloc(sizeof(struct LBSTIterator));
     struct LStack **pp_stack = l_stack_create();
 
-    p_iter->explored_left = false;
+    p_iter->explored_left = FALSE;
     p_iter->stack = pp_stack;
 
     l_stack_push_start(pp_stack, bst_root);
@@ -47,9 +47,9 @@ exit:
     struct LBSTNode *target = l_stack_pop_start(stack);
     if (right != NULL) {
         l_stack_push_start(stack, right);
-        b->explored_left = false;
+        b->explored_left = FALSE;
     } else {
-        b->explored_left = true;
+        b->explored_left = TRUE;
     }
 
     return target;
@@ -126,7 +126,7 @@ void l_bst_remove(struct LBSTNode **root, void *value, int (*compare)(void*, voi
     struct LBSTNode *target = *root;
     bool last_branch_direction;
 
-    while (true) {
+    while (TRUE) {
         if (target == NULL) return; // we couldn't find the value
 
         int comparison = compare(target->data, value);
@@ -137,10 +137,10 @@ void l_bst_remove(struct LBSTNode **root, void *value, int (*compare)(void*, voi
         parent = target;
         if (comparison < 0) {
             target = target->left;
-            last_branch_direction = false;
+            last_branch_direction = FALSE;
         } else {
             target = target->right;
-            last_branch_direction = true;
+            last_branch_direction = TRUE;
         }
     }
 
@@ -164,21 +164,21 @@ void l_bst_remove(struct LBSTNode **root, void *value, int (*compare)(void*, voi
         }
     } else {
         if ((tleft == NULL) && (tright == NULL)) {
-            if (last_branch_direction == false) {
+            if (last_branch_direction == FALSE) {
                 // target is left branch of the parent
                 parent->left = NULL;
             } else {
                 parent->right = NULL;
             }
         } else if ((tleft == NULL) && (tright != NULL)) {
-            if (last_branch_direction == false) {
+            if (last_branch_direction == FALSE) {
                 // target is left branch of the parent
                 parent->left = tright;
             } else {
                 parent->right = tright;
             }
         } else if ((tleft != NULL) && (tright == NULL)) {
-            if (last_branch_direction == false) {
+            if (last_branch_direction == FALSE) {
                 // target is left branch of the parent
                 parent->left = tleft;
             } else {
@@ -186,7 +186,7 @@ void l_bst_remove(struct LBSTNode **root, void *value, int (*compare)(void*, voi
             }
         } else { // ((tleft != NULL) && (tright != NULL)) {
             _attach_a_to_leftmost_branch_of_b(tleft, tright);
-            if (last_branch_direction == false) {
+            if (last_branch_direction == FALSE) {
                 // target is left branch of the parent
                 parent->left = tright;
             } else {

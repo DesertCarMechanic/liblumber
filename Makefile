@@ -3,9 +3,11 @@ LIB_NAME = lumber
 
 SRC_DIR = src
 SRC_FILES = \
+	memtools.c \
+	array.c \
+	stack.c \
 	binary_search_tree.c \
-	red_black_tree.c \
-	stack.c
+	red_black_tree.c
 FULL_SRC_FILES = $(patsubst %.c,$(SRC_DIR)/%.c, $(SRC_FILES))
 
 OBJECT_FILES = $(patsubst %.c, %.o, $(SRC_FILES))
@@ -13,12 +15,15 @@ OBJECT_FILES = $(patsubst %.c, %.o, $(SRC_FILES))
 TEST_NAME = compiled_test_suite
 TEST_DIR = tests
 TEST_FILE_PREFIX = test
+MAIN_TEST_FILE = $(TEST_DIR)/main.c
 TEST_FILES = \
-	$(TEST_DIR)/main.c \
-	$(TEST_DIR)/$(TEST_FILE_PREFIX)_stack.c \
-	$(TEST_DIR)/$(TEST_FILE_PREFIX)_binary_search_tree.c \
-	$(TEST_DIR)/$(TEST_FILE_PREFIX)_red_black_tree.c \
-	$(TEST_DIR)/$(TEST_FILE_PREFIX)_common.c
+	common.c \
+	memtools.c \
+	array.c \
+	stack.c \
+	binary_search_tree.c \
+	red_black_tree.c
+FULL_TEST_FILES = $(patsubst %.c, $(TEST_DIR)/$(TEST_FILE_PREFIX)_%.c, $(TEST_FILES))
 TEST_SEED = $(shell date +"%s")
 TEST_SEED_MACRO_NAME = TEST_SEED
 
@@ -43,11 +48,12 @@ compile: $(FULL_SRC_FILES)
 library: $(OBJECT_FILES)
 	$(CC) -shared $(OBJECT_FILES) -o lib$(LIB_NAME).so
 
-test: $(FULL_SRC_FILES) $(TEST_FILES)
+test: $(FULL_SRC_FILES) $(MAIN_TEST_FILE) $(FULL_TEST_FILES)
 	$(CC) \
 		-D$(TEST_SEED_MACRO_NAME)=$(TEST_SEED) \
 		$(FULL_SRC_FILES) \
-		$(TEST_FILES) \
+		$(MAIN_TEST_FILE) \
+		$(FULL_TEST_FILES) \
 		$(COMPILER_FLAGS) \
 		$(CFLAGS) \
 		$(LIBS) \
@@ -55,13 +61,14 @@ test: $(FULL_SRC_FILES) $(TEST_FILES)
 		$(MANUAL_LIBS) \
 		-o $(TEST_NAME)
 
-debug: $(FULL_SRC_FILES) $(TEST_FILES)
+debug: $(FULL_SRC_FILES) $(MAIN_TEST_FILE) $(FULL_TEST_FILES)
 	$(CC) \
 		-D$(TEST_SEED_MACRO_NAME)=$(TEST_SEED) \
 		--verbose \
 		-g \
 		$(FULL_SRC_FILES) \
-		$(TEST_FILES) \
+		$(MAIN_TEST_FILE) \
+		$(FULL_TEST_FILES) \
 		$(COMPILER_FLAGS) \
 		$(CFLAGS) \
 		$(LIBS) \

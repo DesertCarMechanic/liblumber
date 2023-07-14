@@ -1,6 +1,6 @@
 
 #include <stddef.h>
-#include <stdbool.h>
+#include <sane.h>
 
 struct LBSTNode {
     void *data;
