@@ -15,9 +15,9 @@ i32 compare_int(void *a, void *b)
     u32 n2 = *(u32 *)b;
 
     if (n1 < n2) { 
-        return 1;
-    } else if (n1 > n2) {
         return -1;
+    } else if (n1 > n2) {
+        return 1;
     } else {
         return 0;
     }
@@ -44,18 +44,18 @@ enum RESULT bst_test_insert_remove_func(void)
     }
 
     // add them to the binary search tree
-    struct LBSTNode **bst_tree = l_bst_create();
+    struct LBST *bst = l_bst_create(compare_int, sizeof(u32));
     for (u32 i=0; i<nr_of_randoms; i++) {
-        l_bst_insert(bst_tree, &(data[i]), sizeof(u32), compare_int);
+        l_bst_insert(bst, &(data[i]));
     }
 
     // remove all of them
     for (u32 i=0; i<nr_of_randoms; i++) {
-        l_bst_remove(bst_tree, &data[i], compare_int);
+        l_bst_remove(bst, &data[i]);
     }
 
     // the tree should be empty now. if not, error
-    if (*bst_tree != NULL) {
+    if (bst->root != NULL) {
         return RESULT_FAILURE;
     }
 
@@ -67,7 +67,7 @@ enum RESULT bst_test_insert_remove_func(void)
     // }
     // l_bst_iterator_destroy(bst_iter);
 
-    l_bst_destroy(bst_tree);
+    l_bst_destroy(bst);
 
     return RESULT_SUCCESS;
 }

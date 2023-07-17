@@ -12,7 +12,6 @@ struct LArray {
     u64 length; // the number of elements contained in `data`
 };
 
-void memory_copy_blind(void *a, void *b, size_t nr_bytes);
 struct LArray *l_array_create(size_t data_size, size_t memory_block_size);
 struct LArray *l_array_from_list(void *list, u64 length, size_t data_size, size_t memory_block_size);
 void l_array_append(struct LArray *larray, void *thing);

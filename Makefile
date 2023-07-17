@@ -27,11 +27,21 @@ FULL_TEST_FILES = $(patsubst %.c, $(TEST_DIR)/$(TEST_FILE_PREFIX)_%.c, $(TEST_FI
 TEST_SEED = $(shell date +"%s")
 TEST_SEED_MACRO_NAME = TEST_SEED
 
+HEADER_FILES = \
+	memtools.h \
+	array.h \
+	stack.h \
+	binary_search_tree.h \
+	red_black_tree.h
+
 PACKAGES ?=
 PKGCONFIG = pkg-config
 COMPILER_FLAGS = -std=c99 -Wall
 CFLAGS = $(if $(PACKAGES), $(shell $(PKGCONFIG) --cflags $(PACKAGES)),)
 LIBS = $(if $(PACKAGES), $(shell $(PKGCONFIG) --libs $(PACKAGES)),)
+
+INSTALL_DIR = /usr/lib
+INCLUDE_DIR = /usr/include/$(LIB_NAME)
 
 LIB_FORGE = \
 	-I/usr/include/forge \
@@ -46,7 +56,7 @@ all: compile library
 compile: $(FULL_SRC_FILES)
 	$(CC) -fpic -c $(FULL_SRC_FILES) $(COMPILER_FLAGS) $(CFLAGS) $(LIBS) $(MANUAL_LIBS) $(FULL_SRC_FILES)
 library: $(OBJECT_FILES)
-	$(CC) -shared $(OBJECT_FILES) -o lib$(LIB_NAME).so
+	$(CC) -shared $(OBJECT_FILES) -o $(LIB_NAME).so
 
 test: $(FULL_SRC_FILES) $(MAIN_TEST_FILE) $(FULL_TEST_FILES)
 	$(CC) \
@@ -75,6 +85,22 @@ debug: $(FULL_SRC_FILES) $(MAIN_TEST_FILE) $(FULL_TEST_FILES)
 		$(LIB_FORGE) \
 		$(MANUAL_LIBS) \
 		-o $(TEST_NAME)
+
+install: $(LIB_NAME).so $(patsubst %.h, $(SRC_DIR)/%.h, $(HEADER_FILES))
+	chmod 755 $(LIB_NAME).so
+	cp $(LIB_NAME).so $(INSTALL_DIR)
+	mkdir -p $(INCLUDE_DIR)
+	for header in $(HEADER_FILES); do \
+		cp $(SRC_DIR)/$$header $(INCLUDE_DIR); \
+	done
+	ldconfig -n $(INSTALL_DIR)
+
+uninstall:
+	$(RM) $(INSTALL_DIR)/$(LIB_NAME).so
+	for header in $(HEADER_FILES); do \
+		$(RM) $(INCLUDE_DIR)/$$header; \
+	done
+	rmdir $(INCLUDE_DIR)
 
 clean:
 	$(RM) *.o *.so $(TEST_NAME) core* valgrind_report

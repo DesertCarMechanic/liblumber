@@ -1,3 +1,5 @@
 notes/
 valgrind_report
 compiled_test_suite
+*.o
+*.so

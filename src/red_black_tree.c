@@ -63,7 +63,7 @@ void l_rbt_insert(struct LRBTNode **tree, void *value, size_t value_size, int(*c
 
         if (parent == NULL) { // "new_node" is root
             new_node->color = RBT_COLOR_BLACK; // root node is always black
-            *tree = parent;
+            *tree = new_node;
             return;
         }
 
